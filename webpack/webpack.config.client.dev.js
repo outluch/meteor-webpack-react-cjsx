@@ -3,6 +3,31 @@ var config = require('./webpack.config.client');
 var _ = require('lodash');
 var devProps = require('./devProps');
 
+
+babelSettings = {
+  stage: 0,
+  cacheDirectory: true,
+  plugins: [
+    'react-transform'
+  ],
+  extra: {
+    'react-transform': {
+      transforms: [{
+        transform: 'react-transform-hmr',
+        imports: ['react'],
+        // this is important for Webpack HMR:
+        locals: ['module']
+      },
+      {
+        transform: 'react-transform-catch-errors',
+        // the second import is the React component to render error
+        // (it can be a local path too, like './src/ErrorReporter')
+        imports: ['react', 'redbox-react']
+      }]
+    }
+  },
+}
+
 var config = module.exports = _.assign(_.clone(config), {
   devtool: 'eval',
   entry: [
@@ -22,29 +47,12 @@ var config = module.exports = _.assign(_.clone(config), {
         test: /\.jsx?$/,
         loader: 'babel',
         exclude: /node_modules|lib/,
-        query: {
-          stage: 0,
-          cacheDirectory: true,
-          plugins: [
-            'react-transform'
-          ],
-          extra: {
-            'react-transform': {
-              transforms: [{
-                transform: 'react-transform-hmr',
-                imports: ['react'],
-                // this is important for Webpack HMR:
-                locals: ['module']
-              },
-              {
-                transform: 'react-transform-catch-errors',
-                // the second import is the React component to render error
-                // (it can be a local path too, like './src/ErrorReporter')
-                imports: ['react', 'redbox-react']
-              }]
-            }
-          },
-        },
+        query: babelSettings
+      },
+      {
+        test: /\.cjsx$/,
+        loader: 'babel?' + JSON.stringify(babelSettings) + '!coffee!cjsx',
+        exclude: /node_modules|lib/,
       },
       {
         test: /\.css$/,
