@@ -1,0 +1,1 @@
+module.exports = new Mongo.Collection('items')
