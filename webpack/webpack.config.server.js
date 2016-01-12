@@ -15,7 +15,7 @@ module.exports = {
     publicPath: '/assets/',
   },
   resolve: {
-    extensions: ['', '.js', '.cjsx'],
+    extensions: ['', '.js', '.cjsx', '.sass'],
     root: path.join(__dirname, '../app'),
   },
   module: {
@@ -29,7 +29,12 @@ module.exports = {
         test: /\.cjsx?$/,
         loader: 'coffee!cjsx',
         exclude: /node_modules|lib/,
-      },      {
+      },
+      {
+        test: /\.sass$/,
+        loader: 'null-loader'
+      },
+      {
         test: /\.css$/,
         loader: 'null-loader'
       },

@@ -17,8 +17,10 @@ serverConfig.plugins.push(new webpack.BannerPlugin('var require = Npm.require;\n
 
 var serverBundlePath = path.join(dirs.assets, 'server.bundle.js');
 var clientBundlePath = path.join(dirs.assets, 'client.bundle.js');
+var clientBundleCssPath = path.join(dirs.assets, 'client.bundle.css');
 var serverBundleLink = path.join(dirs.meteor, 'server/server.bundle.min.js');
 var clientBundleLink = path.join(dirs.meteor, 'client/client.bundle.min.js');
+var clientBundleCssLink = path.join(dirs.meteor, 'client/client.bundle.min.css');
 var loadClientBundleHtml = path.join(dirs.webpack, 'loadClientBundle.html');
 var loadClientBundleLink = path.join(dirs.meteor, 'client/loadClientBundle.html');
 var requireServerBundleJs = path.join(dirs.meteor, 'server/require.server.bundle.js');
@@ -31,6 +33,7 @@ module.exports = function(callback) {
   }
 
   if (fs.existsSync(loadClientBundleLink)) rm(loadClientBundleLink);
+  if (fs.existsSync(clientBundleCssLink)) rm(clientBundleCssLink);
   if (fs.existsSync(requireServerBundleJs)) rm(requireServerBundleJs);
 
   var serverCompiler = webpack(serverConfig);
@@ -60,6 +63,7 @@ module.exports = function(callback) {
         return callback(new Error('Webpack reported compilation errors'));
       }
       ln('-sf', clientBundlePath, clientBundleLink);
+      ln('-sf', clientBundleCssPath, clientBundleCssLink);
       return callback();
     });
   }

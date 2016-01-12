@@ -26,9 +26,11 @@ serverConfig.plugins.push(new webpack.BannerPlugin(
 ));
 
 var serverBundlePath = path.join(dirs.assets, 'server.bundle.js');
+var clientBundleCssPath = path.join(dirs.assets, 'client.bundle.css');
 var serverBundleRequirePath = serverBundlePath.replace(/\\/g, '\\\\');
 var serverBundleLink = path.join(dirs.meteor, 'server/server.bundle.min.js');
 var clientBundleLink = path.join(dirs.meteor, 'client/client.bundle.min.js');
+var clientBundleCssLink = path.join(dirs.meteor, 'client/client.bundle.min.css');
 var loadClientBundleHtml = path.join(dirs.webpack, 'loadClientBundle.html');
 var loadClientBundleLink = path.join(dirs.meteor, 'client/loadClientBundle.html');
 
@@ -37,6 +39,7 @@ var requireServerBundleJs = path.join(dirs.meteor, 'server/require.server.bundle
 exec('node core-js-custom-build.js');
 
 if (fs.existsSync(clientBundleLink)) rm(clientBundleLink);
+if (fs.existsSync(clientBundleCssLink)) rm(clientBundleCssLink);
 if (fs.existsSync(serverBundleLink)) rm(serverBundleLink);
 
 var serverCompiler = webpack(serverConfig);

@@ -55,6 +55,10 @@ var config = module.exports = _.assign(_.clone(config), {
         exclude: /node_modules|lib/,
       },
       {
+        test: /\.sass$/,
+        loader: 'style!css!sass?indentedSyntax=true'
+      },
+      {
         test: /\.css$/,
         loader: 'style!css',
         exclude: /node_modules|lib/,
