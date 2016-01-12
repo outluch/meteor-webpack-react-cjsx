@@ -7,7 +7,7 @@
 accounts-ui
 accounts-password
 react-meteor-data
-babel-runtime
+# babel-runtime
 meteor-base
 mobile-experience
 mongo
